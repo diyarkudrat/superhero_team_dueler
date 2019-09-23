@@ -65,12 +65,26 @@ class Hero:
             return False
 
     def fight(self, opponent):
-        while self.is_alive() == True and opponent.is_alive() == True:
-            self.take_damage(opponent.attack)
-            opponent.take_damage(self.attack)
+        # print('!!!!')
+        # print(self.name)
+        # print(opponent.name)
+        match = True
+        while match:
+            if len(self.abilities) == 0 and len(opponent.abilities) == 0:
+                print('Draw!')
+            else:
+                self.take_damage(opponent.attack())
+                opponent.take_damage(self.attack())
 
-            if self.is_alive == False or opponent.is_alive == False:
-                print(self.name)
+            if self.is_alive() == False:
+                match = False
+                print(f'{opponent.name} won!')
+            elif opponent.is_alive() == False:
+                match = False
+                print(f'{self.name} won!')
+
+
+
 
 
 
