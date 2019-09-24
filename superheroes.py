@@ -11,6 +11,10 @@ class Ability:
         attack_damage = random.randint(0, self.max_damage)
         return attack_damage
 
+class Weapon(Ability):
+    def attack(self):
+        return random.randint(self.max_damage // 2, self.max_damage)
+
 class Armor:
     def __init__(self, name, max_block):
         self.name = name
@@ -28,12 +32,6 @@ class Hero:
         self.abilities = []
         self.armors = []
 
-    # add_ability: Parameters: ability:Ability Object
-    # attack: No Parameters
-    # defend: incoming_damage: Integer
-    # take_damage: Parameters: damage
-    # is_alive: No Parameters
-    # fight: Parameters: opponent: Hero Class
 
     def add_ability(self, ability):
         return self.abilities.append(ability)
@@ -82,6 +80,25 @@ class Hero:
             elif opponent.is_alive() == False:
                 match = False
                 print(f'{self.name} won!')
+
+class Team:
+    def __init__(self, name):
+        self.name = name
+        self.hero = list()
+
+    def remove_hero(self, name):
+        if self.name in self.hero:
+            self.hero.pop(self.name)
+        else:
+            return 0
+
+    def view_all_heroes(self):
+        for name in self.hero:
+            return name
+
+    def add_hero(self, hero):
+        return self.hero.append(hero)
+
 
 
 
