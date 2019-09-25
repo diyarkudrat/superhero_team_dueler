@@ -29,3 +29,12 @@ Hero class
         return the winner's  name
       if there's no abilities in either Hero:
         print Draw!
+
+  Arena class
+
+    create_ability method:
+      Allow user to create new ability.
+      Ask user for necessary info to create new ability object.
+      return ability object.
+
+      

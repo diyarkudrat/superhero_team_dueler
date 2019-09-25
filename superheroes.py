@@ -25,10 +25,12 @@ class Armor:
         return block_strength
 
 class Hero:
-    def __init__(self, name, start_health = 100):
+    def __init__(self, name, starting_health = 100):
         self.name = name
-        self.start_health = start_health
-        self.current_health = start_health
+        self.starting_health = starting_health
+        self.current_health = starting_health
+        self.deaths = 0
+        self.kills = 0
         self.abilities = []
         self.armors = []
 
@@ -62,6 +64,19 @@ class Hero:
         else:
             return False
 
+    def add_kill(self, num_kills):
+        self.kills += num_kills
+
+    def add_deaths(self, num_deaths):
+        self.deaths += num_deaths
+
+    def add_weapon(self, weapon):
+        return self.abilities.append(weapon)
+
+    def add_armor(self, armor):
+        armor = Armor()
+        self.armors.append(armor)
+
     def fight(self, opponent):
         # print('!!!!')
         # print(self.name)
@@ -74,6 +89,13 @@ class Hero:
                 self.take_damage(opponent.attack())
                 opponent.take_damage(self.attack())
 
+            if self.current_health == False:
+                opponent.add_kill(1)
+                self.add_deaths(1)
+            else:
+                self.add_kill(1)
+                opponent.add_deaths(1)
+
             if self.is_alive() == False:
                 match = False
                 print(f'{opponent.name} won!')
@@ -84,20 +106,69 @@ class Hero:
 class Team:
     def __init__(self, name):
         self.name = name
-        self.hero = list()
+        self.heroes = list()
 
     def remove_hero(self, name):
-        if self.name in self.hero:
-            self.hero.pop(self.name)
-        else:
+        # if self.name in self.heroes:
+        #     self.heroes.remove(self.name)
+        # else:
+        #     return 0
+
+        if len(self.heroes) == 0:
             return 0
+        for hero in self.heroes:
+            if hero.name == name:
+                self.heroes.remove(hero)
+        return 0
 
     def view_all_heroes(self):
-        for name in self.hero:
-            return name
+        for hero in self.heroes:
+            print(hero.name)
 
     def add_hero(self, hero):
-        return self.hero.append(hero)
+        return self.heroes.append(hero)
+
+    def attack(self, other_team):
+        team1 = random.choice(self.heroes)
+        team2 = random.choice(other_team.heroes)
+
+        team1.fight(team2)
+
+    def revive_heroes(self, health = 100):
+        for l in self.heroes:
+            health = l.current_health
+
+    def display_stats(self):
+        if self.deaths > 0:
+            ratio = self.kills/self.deaths
+        else:
+            ratio = self.kills
+
+        print(f'{self.name} Kill/Death Ratio: {ratio}')
+
+    def stats(self):
+        for i in self.heroes:
+            i.display_stats()
+
+class Arena:
+    def __init__(self):
+        self.team_one = None
+        self.team_two = None
+
+    def create_ability(self):
+        ability = input('Enter name of ability: ')
+        damage = input('Enter max damage: ')
+        return Ability(ability, damage)
+
+    def create_weapon(self):
+        weapon = input('Enter name of weapon: ')
+        damage = input('Enter max damage: ')
+        return Weapon(weapon, damage)
+
+    def create_armor(self):
+        
+
+
 
 
 
