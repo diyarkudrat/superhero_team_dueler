@@ -37,4 +37,12 @@ Hero class
       Ask user for necessary info to create new ability object.
       return ability object.
 
-      
+    create_hero method:
+      Ask for hero name.
+      Ask if user wants abilities, weapons, armors for hero.
+      Ask user input info for abilities, weapons, and armors.
+      Call the methods for abilities, weapons, and armors.
+        create_ability
+        create_weapon
+        create_armor
+      return Hero

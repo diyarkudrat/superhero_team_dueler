@@ -166,7 +166,63 @@ class Arena:
         return Weapon(weapon, damage)
 
     def create_armor(self):
-        
+        armor = input('Enter name of armor: ')
+        block = input('Enter max block: ')
+        return Armor(armor, block)
+
+    def create_hero(self):
+        hero_health = 100
+        hero_name = input('What is your hero name: ')
+        new_hero = Hero(hero_name, hero_health)
+
+        ability = input('Do you want to add an ability? Y/N')
+        if ability == 'Y' or 'y':
+            new_hero.abilities.append(self.create_ability())
+        else:
+            print('No ability added')
+
+        weapon = input('Do you want to add a weapon? Y/N')
+        if weapon == 'Y' or 'y':
+            new_hero.abilities.append(self.create_weapon())
+        else:
+            print('No weapon added')
+
+        armor = input('Do you want to add any armor? Y/N')
+        if armor == 'Y' or 'y':
+            new_hero.armor.append(self.create_armor())
+        else:
+            print('no armor added')
+
+        return new_hero
+
+    def build_team_one(self):
+        team_name = input('What is the name of Team: ')
+        self.team_one = Team(team_name)
+
+        num_heroes = int(input(f'How many heroes in {team_name}: '))
+
+        count = 0
+        while count != num_heroes:
+            self.team_one.heroes.append(self.create_hero())
+            count += 1
+
+        return self.team_one
+
+    def build_team_two(self):
+        team_name = input('What is the name of Team 2: ')
+        self.team_two = Team(team_name)
+
+        num_heroes = int(input(f'How many heroes in {team_name}: '))
+
+        count = 0
+        while count != num_heroes:
+            self.team_two.heroes.apped(self.create_hero())
+            count += 1
+
+        return self.team_one
+
+
+
 
 
 
@@ -213,14 +269,17 @@ if __name__ == '__main__':
     # hero.take_damage(15000)
     # print(hero.is_alive())
 
-    hero1 = Hero("Wonder Woman")
-    hero2 = Hero("Dumbledore")
-    ability1 = Ability("Super Speed", 300)
-    ability2 = Ability("Super Eyes", 130)
-    ability3 = Ability("Wizard Wand", 80)
-    ability4 = Ability("Wizard Beard", 20)
-    hero1.add_ability(ability1)
-    hero1.add_ability(ability2)
-    hero2.add_ability(ability3)
-    hero2.add_ability(ability4)
-    hero1.fight(hero2)
+    # hero1 = Hero("Wonder Woman")
+    # hero2 = Hero("Dumbledore")
+    # ability1 = Ability("Super Speed", 300)
+    # ability2 = Ability("Super Eyes", 130)
+    # ability3 = Ability("Wizard Wand", 80)
+    # ability4 = Ability("Wizard Beard", 20)
+    # hero1.add_ability(ability1)
+    # hero1.add_ability(ability2)
+    # hero2.add_ability(ability3)
+    # hero2.add_ability(ability4)
+    # hero1.fight(hero2)
+
+    hero1 = Arena()
+    hero1.create_hero()
