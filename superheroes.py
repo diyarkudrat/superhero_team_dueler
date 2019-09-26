@@ -221,15 +221,70 @@ class Arena:
 
         return self.team_one
 
+    def team_battle(self):
+        self.team_one.attack(self.team_two)
+
+    def team_dead(self, team):
+        dead_count = 0
+
+        for hero in team:
+            if hero.current_health == 0:
+                dead_count += 1
+
+            if death_count == len(team):
+                return True
+            else:
+                return False
+
+    def show_stats(self):
+        team_1 = self.is_team_dead(self.team_one.heroes)
+        team_2 = self.is_team_dead(self.team_two.heroes)
+
+        if team_1 == False:
+            winner = self.team_one.name
+            print(f'Winner is: {winner}!')
+            print('Heroes left: ')
+            for hero in self.team_one.heroes:
+                if hero.current_health > 0:
+                    print(hero.name)
+        elif team_2 == False:
+            winner = self.team_two.name
+            print(f'Winner is: {winner}!')
+            print('Heroes left: ')
+            for hero in self.team_two.heroes:
+                if hero.current_heath > 0:
+                    print(hero.name)
+        elif team_1 == team_2:
+            print('Draw!')
+
+        print(f'Stats for {self.team_one.name}: {self.team_one.display_stats()}')
+        print(f'Stats for {self.team_two.name}: {self.team_two.display_stats()}')
 
 
+if __name__ == "__main__":
+    game_is_running = True
 
+    # Instantiate Game Arena
+    arena = Arena()
 
+    #Build Teams
+    arena.build_team_one()
+    arena.build_team_two()
 
+    while game_is_running:
 
+        arena.team_battle()
+        arena.show_stats()
+        play_again = input("Play Again? Y or N: ")
 
+        #Check for Player Input
+        if play_again.lower() == "n":
+            game_is_running = False
 
-
+        else:
+            #Revive heroes to play again
+            arena.team_one.revive_heroes()
+            arena.team_two.revive_heroes()
 
 
 
