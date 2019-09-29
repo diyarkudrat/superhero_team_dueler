@@ -86,7 +86,7 @@ class Hero:
             ratio = self.kills
 
         print(f'{self.name} Kill/Death Ratio: {ratio}')
-        # print('????')
+        # return '!!!!'
 
     def fight(self, opponent):
         # print('!!!!')
@@ -95,7 +95,8 @@ class Hero:
         match = True
         while match:
             if len(self.abilities) == 0 and len(opponent.abilities) == 0:
-                print('Draw!')
+                # print('Draw!')
+                match = False
             else:
                 self.take_damage(opponent.attack())
                 opponent.take_damage(self.attack())
@@ -146,8 +147,9 @@ class Team:
         team1.fight(team2)
 
     def revive_heroes(self, health = 100):
-        for l in self.heroes:
-            health = l.current_health
+        for hero in self.heroes:
+            health = hero.current_health
+        # team1.attack(team2)
 
     # def display_stats(self):
     #     if self.deaths > 0:
@@ -160,7 +162,7 @@ class Team:
     def stats(self):
         for i in self.heroes:
             i.display_stats()
-            # print('????')
+            return " "
 
 class Arena:
     def __init__(self):
@@ -265,6 +267,7 @@ class Arena:
         team_1 = self.team_dead(self.team_one.heroes)
         team_2 = self.team_dead(self.team_two.heroes)
 
+
         if team_1 == False:
             winner = self.team_two.name
             print(f'Winner is: {winner}!')
@@ -272,19 +275,28 @@ class Arena:
             for hero in self.team_two.heroes:
                 if hero.current_health > 0:
                     print(hero.name)
-            print(self.team_two.stats())
-            print(self.team_one.stats())
+
         elif team_2 == False:
             winner = self.team_one.name
             print(f'Winner is: {winner}!')
             print('Heroes left: ')
             for hero in self.team_one.heroes:
-                if hero.current_heath > 0:
+                if hero.current_health > 0:
                     print(hero.name)
-            print(self.team_one.stats())
-            print(self.team_two.stats())
         elif team_1 == team_2:
             print('Draw!')
+
+        else:
+            return None
+
+            #print('????')
+        # elif team_1 == team_2:
+        #     print('!!!!')
+
+
+        print(self.team_two.stats())
+        print(self.team_one.stats())
+
 
 
         # print(self.team_one.stats())
