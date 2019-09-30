@@ -1,5 +1,17 @@
 #Superhero_team_dueler
+Instructions!:
+  Enter Team 1 name.
+  Enter how many heroes you want on the team.
+  Enter name(s) of the heroes.
+  Enter any abilities, weapons, armors that you want each hero to have.
+  Do the same steps above for Team 2.
 
+Result:
+  Winner.
+  List of surviving heroes.
+  Kill/Death Ratio for each team.
+
+#PseudoCode that guided me throughout the project
 Hero class
 
   defend method:
