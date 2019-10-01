@@ -58,3 +58,12 @@ Hero class
         create_weapon
         create_armor
       return Hero
+
+  Team class
+
+    def heroes_alive:
+      gives a list of heroes that are still alive .
+
+    def attack:
+      team1 fights team2 based on random choice of the heroes_alive list.
+      team1 fights team2.
