@@ -25,11 +25,11 @@ class Armor:
         return block_strength
 
 class Hero:
-    def __init__(self, name, ratio, starting_health = 100):
+    def __init__(self, name, starting_health = 100):
         self.name = name
         self.starting_health = starting_health
         self.current_health = starting_health
-        self.ratio = ratio
+        self.ratio = 0
         self.deaths = 0
         self.kills = 0
         self.abilities = []
@@ -120,6 +120,7 @@ class Team:
     def __init__(self, name):
         self.name = name
         self.heroes = list()
+        self.ratio = 0
 
     def remove_hero(self, name):
         if self.name in self.heroes:
@@ -152,14 +153,14 @@ class Team:
             health = hero.current_health
         # team1.attack(team2)
 
-    def display_stats(self):
-        if self.deaths > 0:
-            self.ratio = self.kills/self.deaths
-        else:
-            self.ratio = self.kills
-
-        print(f'Kill/Death Ratio: {self.ratio}')
-        # return '!!!!'
+    # def display_stats(self):
+    #     if self.deaths > 0:
+    #         self.ratio = self.kills/self.deaths
+    #     else:
+    #         self.ratio = self.kills
+    #
+    #     print(f'Kill/Death Ratio: {self.ratio}')
+    #     # return '!!!!'
 
 
 
@@ -258,7 +259,11 @@ class Arena:
         return self.team_one
 
     def team_battle(self):
-        self.team_one.attack(self.team_two)
+        team1_alive = not self.team_dead(self.team_one)
+        team2_alive = not self.team_dead(self.team_two)
+
+        while team1_alive or team2_alive:
+            self.team_one.attack(self.team_two)
 
     def team_dead(self, team):
         dead_count = 0
@@ -277,8 +282,8 @@ class Arena:
     def show_stats(self):
 
         victor = ""
-        team1 = self.team_one.stats()
-        team2 = self.team_two.stats()
+        team1 = self.team_one.ratio
+        team2 = self.team_two.ratio
 
         if team1 == team2:
             print("Draw!")
