@@ -169,6 +169,7 @@ class Team:
             total += hero.ratio
 
         self.ratio = total / len(self.heroes)
+        return self.ratio
 
 
 
@@ -279,10 +280,10 @@ class Arena:
         team1 = self.team_one.stats()
         team2 = self.team_two.stats()
 
-        if team1 and team2 == 0:
+        if team1 == team2:
             print("Draw!")
 
-        elif team1 == 0:
+        elif team1 < team2:
             victor = self.team_two.name
             print(f"Winner: {winner}!")
             print(f"Heroes left from {winner}: ")
@@ -291,7 +292,7 @@ class Arena:
                 if hero.current_health > 0:
                     print(hero.name)
 
-        elif team2 == 0:
+        elif team1 > team2:
             victor = self.team_one.name
             print(f"Winner: {winner}!")
             print(f"Heroes left from {winner}: ")
