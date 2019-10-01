@@ -62,10 +62,10 @@ class Hero:
         return self.current_health
 
     def is_alive(self):
-        if self.current_health > 0:
-            return True
-        else:
+        if int(self.current_health <= 0):
             return False
+        else:
+            return True
 
     def add_kill(self, num_kills):
         self.kills += num_kills
@@ -96,19 +96,19 @@ class Hero:
         # match = True
         # while match:
         #     print('hero.fight')
-        if len(self.abilities) == 0 and len(opponent.abilities) == 0:
-            # print('Draw!')
-            # match = False
-            self.take_damage(opponent.attack())
-            opponent.take_damage(self.attack())
-
-        if self.current_health == 0:
-            opponent.add_kill(1)
-            self.add_deaths(1)
-
-        if opponent.current_health == 0:
-            self.add_kill(1)
-            opponent.add_deaths(1)
+        # if len(self.abilities) == 0 and len(opponent.abilities) == 0:
+        #     # print('Draw!')
+        #     # match = False
+        # self.take_damage(opponent.attack())
+        # opponent.take_damage(self.attack())
+        #
+        # if self.current_health == 0:
+        #     opponent.add_kill(1)
+        #     self.add_deaths(1)
+        #
+        # if opponent.current_health == 0:
+        #     self.add_kill(1)
+        #     opponent.add_deaths(1)
 
         # match = False
 
@@ -118,6 +118,24 @@ class Hero:
             # elif opponent.is_alive() == False:
             #     match = False
             #     # print(f'{self.name} won!')
+
+
+        while self.is_alive() and opponent.is_alive():
+            self.take_damage(opponent.attack())
+            opponent.take_damage(self.attack())
+
+        if not opponent.is_alive():
+            self.add_kill(1)
+            opponent.add_deaths(1)
+            print(f'{self.name} won!')
+
+        elif not self.is_alive():
+            opponent.add_kill(1)
+            self.add_deaths(1)
+            print(f'{opponent.name} won!')
+
+        else:
+            print('Draw!')
 
 class Team:
     def __init__(self, name):
@@ -168,12 +186,27 @@ class Team:
 
 
     def stats(self):
-        total = 0
-        for hero in self.heroes:
-            total += hero.ratio
+        # total = 0
+        # for hero in self.heroes:
+        #     total += hero.ratio
+        #
+        # self.ratio = total / len(self.heroes)
+        # return self.ratio
 
-        self.ratio = total / len(self.heroes)
-        return self.ratio
+        ratio = 0
+        total_kills = 0
+        total_deaths = 0
+        for hero in self.heroes:
+            total_kills += hero.kills
+            total_deaths += hero.deaths
+
+        if total_deaths == 0:
+            ratio = total_kills
+
+        else:
+            ratio = total_kills/total_deaths
+
+        return ratio
 
 
 
@@ -290,34 +323,37 @@ class Arena:
 
     def show_stats(self):
 
-        victor = ""
-        team1 = self.team_one.ratio
-        team2 = self.team_two.ratio
+        # victor = ""
+        # team1 = self.team_one.ratio
+        # team2 = self.team_two.ratio
+        #
+        # if team1 == team2:
+        #     print("Draw!")
+        #
+        # elif team1 < team2:
+        #     victor = self.team_two.name
+        #     print(f"Winner: {winner}!")
+        #     print(f"Heroes left from {winner}: ")
+        #     for hero in self.team_two.heroes:
+        #         # print(hero.current_health)
+        #         if hero.current_health > 0:
+        #             print(hero.name)
+        #
+        # elif team1 > team2:
+        #     victor = self.team_one.name
+        #     print(f"Winner: {winner}!")
+        #     print(f"Heroes left from {winner}: ")
+        #     for hero in self.team_one.heroes:
+        #         # print(hero.current_health)
+        #         if hero.current_health > 0:
+        #             print(hero.name)
+        #
+        # else:
+        #     # return None
+        #     print('!!!')
 
-        if team1 == team2:
-            print("Draw!")
-
-        elif team1 < team2:
-            victor = self.team_two.name
-            print(f"Winner: {winner}!")
-            print(f"Heroes left from {winner}: ")
-            for hero in self.team_two.heroes:
-                # print(hero.current_health)
-                if hero.current_health > 0:
-                    print(hero.name)
-
-        elif team1 > team2:
-            victor = self.team_one.name
-            print(f"Winner: {winner}!")
-            print(f"Heroes left from {winner}: ")
-            for hero in self.team_one.heroes:
-                # print(hero.current_health)
-                if hero.current_health > 0:
-                    print(hero.name)
-
-        else:
-            # return None
-            print('!!!')
+        print(f'Team One KDR: {self.team_one.stats()}')
+        print(f'Team Two KDR: {self.team_two.stats()}')
 
 
             #print('????')
