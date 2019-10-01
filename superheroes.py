@@ -25,10 +25,11 @@ class Armor:
         return block_strength
 
 class Hero:
-    def __init__(self, name, starting_health = 100):
+    def __init__(self, name, ratio, starting_health = 100):
         self.name = name
         self.starting_health = starting_health
         self.current_health = starting_health
+        self.ratio = ratio
         self.deaths = 0
         self.kills = 0
         self.abilities = []
@@ -76,7 +77,7 @@ class Hero:
         return self.abilities.append(weapon)
 
     def add_armor(self, armor):
-        armor = Armor()
+        # armor = Armor()
         self.armors.append(armor)
 
     def display_stats(self):
@@ -85,7 +86,7 @@ class Hero:
         else:
             ratio = self.kills
 
-        print(f'{self.name} Kill/Death Ratio: {ratio}')
+        print(f'Kill/Death Ratio: {ratio}')
         # return '!!!!'
 
     def fight(self, opponent):
@@ -151,18 +152,25 @@ class Team:
             health = hero.current_health
         # team1.attack(team2)
 
-    # def display_stats(self):
-    #     if self.deaths > 0:
-    #         ratio = self.kills/self.deaths
-    #     else:
-    #         ratio = self.kills
-    #
-    #     print(f'{self.name} Kill/Death Ratio: {ratio}')
+    def display_stats(self):
+        if self.deaths > 0:
+            self.ratio = self.kills/self.deaths
+        else:
+            self.ratio = self.kills
+
+        print(f'Kill/Death Ratio: {self.ratio}')
+        # return '!!!!'
+
+
 
     def stats(self):
+        total = 0
         for i in self.heroes:
-            i.display_stats()
-            return " "
+            total += i.display_stats()
+
+        self.ratio = total
+
+
 
 class Arena:
     def __init__(self):
@@ -257,6 +265,8 @@ class Arena:
         for hero in team:
             if hero.current_health == 0:
                 dead_count += 1
+            else:
+                dead_count = 0
 
             if dead_count == len(team):
                 return True
@@ -264,38 +274,45 @@ class Arena:
                 return False
 
     def show_stats(self):
-        team_1 = self.team_dead(self.team_one.heroes)
-        team_2 = self.team_dead(self.team_two.heroes)
 
+        victor = ""
+        team1 = self.team_one.stats()
+        team2 = self.team_two.stats()
 
-        if team_1 == False:
-            winner = self.team_two.name
-            print(f'Winner is: {winner}!')
-            print('Heroes left: ')
+        if team1 and team2 == 0:
+            print("Draw!")
+
+        elif team1 == 0:
+            victor = self.team_two.name
+            print(f"Winner: {winner}!")
+            print(f"Heroes left from {winner}: ")
             for hero in self.team_two.heroes:
+                # print(hero.current_health)
                 if hero.current_health > 0:
                     print(hero.name)
 
-        elif team_2 == False:
-            winner = self.team_one.name
-            print(f'Winner is: {winner}!')
-            print('Heroes left: ')
+        elif team2 == 0:
+            victor = self.team_one.name
+            print(f"Winner: {winner}!")
+            print(f"Heroes left from {winner}: ")
             for hero in self.team_one.heroes:
+                # print(hero.current_health)
                 if hero.current_health > 0:
                     print(hero.name)
-        elif team_1 == team_2:
-            print('Draw!')
 
         else:
             return None
+
 
             #print('????')
         # elif team_1 == team_2:
         #     print('!!!!')
 
-
-        print(self.team_two.stats())
+        print(f'{self.team_one.name} stats: ')
         print(self.team_one.stats())
+
+        print(f'{self.team_two.name} stats: ')
+        print(self.team_two.stats())
 
 
 
@@ -324,10 +341,15 @@ if __name__ == "__main__":
         if play_again.lower() == "n":
             game_is_running = False
 
-        else:
-            #Revive heroes to play again
+        elif play_again.lower() == 'y':
             arena.team_one.revive_heroes()
             arena.team_two.revive_heroes()
+
+
+        # else:
+        #     #Revive heroes to play again
+        #     arena.team_one.revive_heroes()
+        #     arena.team_two.revive_heroes()
 
 
 
