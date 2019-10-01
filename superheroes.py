@@ -182,7 +182,14 @@ class Team:
     #
     #     print(f'Kill/Death Ratio: {self.ratio}')
     #     # return '!!!!'
+    def heroes_alive(self):
+        alive_list = []
 
+        for hero in self.heroes:
+            if hero.is_alive() == True:
+                alive_list.append(hero)
+
+        return alive_list
 
 
     def stats(self):
