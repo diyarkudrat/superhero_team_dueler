@@ -122,10 +122,10 @@ class Team:
         self.heroes = list()
 
     def remove_hero(self, name):
-        # if self.name in self.heroes:
-        #     self.heroes.remove(self.name)
-        # else:
-        #     return 0
+        if self.name in self.heroes:
+            self.heroes.remove(self.name)
+        else:
+            return 0
 
         if len(self.heroes) == 0:
             return 0
@@ -165,10 +165,10 @@ class Team:
 
     def stats(self):
         total = 0
-        for i in self.heroes:
-            total += i.display_stats()
+        for hero in self.heroes:
+            total += hero.ratio
 
-        self.ratio = total
+        self.ratio = total / len(self.heroes)
 
 
 
@@ -301,7 +301,8 @@ class Arena:
                     print(hero.name)
 
         else:
-            return None
+            # return None
+            print('!!!')
 
 
             #print('????')
