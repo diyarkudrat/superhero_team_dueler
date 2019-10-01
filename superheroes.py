@@ -259,11 +259,17 @@ class Arena:
         return self.team_one
 
     def team_battle(self):
-        team1_alive = not self.team_dead(self.team_one)
-        team2_alive = not self.team_dead(self.team_two)
+        # print(self.team_one)
+        # print(self.team_two)
+        team1_alive = True
+        team2_alive = True
 
-        while team1_alive or team2_alive:
+        while team1_alive and team2_alive:
             self.team_one.attack(self.team_two)
+            self.team_two.attack(self.team_one)
+
+            team1_alive = not self.team_dead(self.team_one.heroes)
+            team2_alive = not self.team_dead(self.team_two.heroes)
 
     def team_dead(self, team):
         dead_count = 0
