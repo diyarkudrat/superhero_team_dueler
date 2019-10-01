@@ -93,28 +93,31 @@ class Hero:
         # print('!!!!')
         # print(self.name)
         # print(opponent.name)
-        match = True
-        while match:
-            if len(self.abilities) == 0 and len(opponent.abilities) == 0:
-                # print('Draw!')
-                match = False
-            else:
-                self.take_damage(opponent.attack())
-                opponent.take_damage(self.attack())
+        # match = True
+        # while match:
+        #     print('hero.fight')
+        if len(self.abilities) == 0 and len(opponent.abilities) == 0:
+            # print('Draw!')
+            # match = False
+            self.take_damage(opponent.attack())
+            opponent.take_damage(self.attack())
 
-            if self.current_health == False:
-                opponent.add_kill(1)
-                self.add_deaths(1)
-            else:
-                self.add_kill(1)
-                opponent.add_deaths(1)
+        if self.current_health == 0:
+            opponent.add_kill(1)
+            self.add_deaths(1)
 
-            if self.is_alive() == False:
-                match = False
-                # print(f'{opponent.name} won!')
-            elif opponent.is_alive() == False:
-                match = False
-                # print(f'{self.name} won!')
+        if opponent.current_health == 0:
+            self.add_kill(1)
+            opponent.add_deaths(1)
+
+        # match = False
+
+            # if self.is_alive() == False:
+            #     match = False
+            #     # print(f'{opponent.name} won!')
+            # elif opponent.is_alive() == False:
+            #     match = False
+            #     # print(f'{self.name} won!')
 
 class Team:
     def __init__(self, name):

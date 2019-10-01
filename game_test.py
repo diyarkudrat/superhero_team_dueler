@@ -27,59 +27,58 @@ def capture_console_output(function_body):
 def test_create_ability():
     input_values = ["Amazing Ability", '200']
     # output = []
-​
     def mock_input(s):
         # output.append(s)
         return input_values.pop(0)
     superheroes.input = mock_input
     # superheroes.print = lambda s: output.append(s)
-​
+
     arena = superheroes.Arena()
     ability = arena.create_ability()
-​
+
     assert ['Amazing Ability', 200] == [ability.name, ability.max_damage]
-​
-​
+
+
 def test_create_weapon():
     input_values = ["Amazing Weapon", '200']
-​
+
     def mock_input(s):
         return input_values.pop(0)
     superheroes.input = mock_input
-​
+
     arena = superheroes.Arena()
     weapon = arena.create_weapon()
-​
+
     assert ['Amazing Weapon', 200] == [weapon.name, weapon.max_damage]
-​
-​
+
+
 def test_create_armor():
     input_values = ["Amazing Armor", '300']
-​
+
     def mock_input(s):
         return input_values.pop(0)
     superheroes.input = mock_input
-​
+
     arena = superheroes.Arena()
     armor = arena.create_armor()
-​
+
     assert ['Amazing Armor', 300] == [armor.name, armor.max_block]
-​
-​
+
+
 # testing create hero, could break based off of how you built this function so could be ignorable
 def test_create_hero():
     # These are the values needed to create a hero. Could be different from application to application
     # due to implementation
     input_values = ['Ben', '100', 'y', 'Amazing Ability', '100', 'n',
                     'y', 'Amazing Weapon', '200', 'n', 'y', 'God Armor', '500', 'n']
-​
+
     def mock_input(s):
         return input_values.pop(0)
     superheroes.input = mock_input
-​
+
     arena = superheroes.Arena()
     hero = arena.create_hero()
-​
+
     assert ['Ben', 100, True, 0, 0] == [hero.name, hero.current_health, hero.is_alive(), hero.kills, hero.deaths]
 
 # this is also dependent on how you build a team. if you ask for a name you can add that input to the input values
@@ -90,13 +89,13 @@ def test_build_team_one():
     def mock_input(s):
         return input_values.pop(0)
     superheroes.input = mock_input
-​
+
     arena = superheroes.Arena()
     arena.build_team_one()
-​
+
     assert [1, 'Ben'] == [len(arena.team_one.heroes), arena.team_one.heroes[0].name]
-​
-​
+
+
 # this is also dependent on how you build a team. if you ask for a name
 def test_build_team_two():
     input_values = ['1', 'Steve', '100', 'y', 'Amazing Ability', '100', 'n',
@@ -105,13 +104,13 @@ def test_build_team_two():
     def mock_input(s):
         return input_values.pop(0)
     superheroes.input = mock_input
-​
+
     arena = superheroes.Arena()
     arena.build_team_two()
-​
+
     assert [1, 'Steve'] == [len(arena.team_two.heroes), arena.team_two.heroes[0].name]
-​
-​
+
+
 def test_team_stats():
     input_values = ['1', 'Steve', '100', 'y', 'Amazing Ability', '5000', 'n',
                     'y', 'Amazing Weapon', '200', 'n', 'y', 'God Armor', '500', 'n',
@@ -121,19 +120,20 @@ def test_team_stats():
     def mock_input(s):
         return input_values.pop(0)
     superheroes.input = mock_input
-​
+
     arena = superheroes.Arena()
 
 	arena.build_team_one()
+
 	arena.build_team_two()
-​
+
     arena.team_battle()
-​
+
     arena.show_stats()
-​
+
     # output_str = capture_console_output(arena.show_stats)
     #assert 'Team 1 wins the game!' in output_str
-​
-​
+
+
 if __name__ == '__main__':
     test_team_stats()
